@@ -131,3 +131,6 @@ dmypy.json
 
 # virtualenv stuff
 risk-profile
+
+# Pycharm
+.idea
