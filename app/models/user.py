@@ -30,6 +30,8 @@ class Vehicle(BaseModel):
         if not (first_car_year <= v <= current_year):
             raise ValueError(f'invalid year {v}')
 
+        return v
+
 
 class User(BaseModel):
     age: int

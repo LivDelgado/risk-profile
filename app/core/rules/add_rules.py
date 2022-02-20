@@ -29,4 +29,5 @@ class AddWhenVehicleIsNew(AddToRiskScore):
     def should_apply(self) -> bool:
         max_age = 5
         current_year = int(time.strftime("%Y"))
-        return self.user.vehicle and self.user.vehicle.year and self.user.vehicle.year > (current_year - max_age)
+        min_year = current_year - max_age
+        return self.user.vehicle and self.user.vehicle.year and self.user.vehicle.year > min_year

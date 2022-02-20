@@ -53,7 +53,8 @@ class Auto(Insurance):
             IneligibleWhenNoVehicle(user, base_score),
             DeductWhenYoungerThan30(user, base_score),
             DeductWhenBetween30and40(user, base_score),
-            DeductWhenIncomeOver200k(user, base_score)
+            DeductWhenIncomeOver200k(user, base_score),
+            AddWhenVehicleIsNew(user, base_score)
         ]
         super().__init__(user, base_score, rules_list)
 
@@ -78,7 +79,6 @@ class Life(Insurance):
             DeductWhenBetween30and40(user, base_score),
             DeductWhenIncomeOver200k(user, base_score),
             AddWhenHasDependents(user, base_score),
-            AddWhenIsMarried(user, base_score),
-            AddWhenVehicleIsNew(user, base_score)
+            AddWhenIsMarried(user, base_score)
         ]
         super().__init__(user, base_score, rules_list)
