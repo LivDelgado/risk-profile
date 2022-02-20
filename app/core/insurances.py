@@ -1,5 +1,7 @@
 from typing import List
-from .rules import *
+from .rules.ineligible_rules import *
+from .rules.deduct_rules import *
+from .rules.add_rules import *
 
 
 class Insurance:
