@@ -13,7 +13,10 @@ class AddToRiskScore(Rule):
 
 class AddWhenHouseIsMortgaged(AddToRiskScore):
     def should_apply(self) -> bool:
-        return self.user.house is not None and self.user.house.ownership_status == HouseOwnershipStatus.MORTGAGED
+        return (
+            self.user.house is not None
+            and self.user.house.ownership_status == HouseOwnershipStatus.MORTGAGED
+        )
 
 
 class AddWhenHasDependents(AddToRiskScore):

@@ -7,7 +7,7 @@ user = User(
     dependents=2,
     income=50,
     marital_status=MaritalStatus.MARRIED,
-    risk_questions=[True, False, False]
+    risk_questions=[True, False, False],
 )
 
 base_score = 0
@@ -103,4 +103,3 @@ def test_new_vehicle_rule_should_apply_vehicle_produced_less_than_five_years_ago
     rule = AddWhenVehicleIsNew(user, base_score)
     should_apply = rule.should_apply()
     assert should_apply is True
-

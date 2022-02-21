@@ -25,4 +25,3 @@ def test_determine_final_profile_responsible():
     score = 3
     result = Insurance.determine_final_profile(score)
     assert result == InsurancePlan.RESPONSIBLE
-

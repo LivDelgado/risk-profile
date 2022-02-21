@@ -29,5 +29,6 @@ def calculate_risk_profile(user: User) -> InsurancePlanRecommendation:
     home = Home(user, base_score).get_insurance_plan_recommendation()
     life = Life(user, base_score).get_insurance_plan_recommendation()
 
-    return InsurancePlanRecommendation(auto=auto, disability=disability, home=home, life=life)
-
+    return InsurancePlanRecommendation(
+        auto=auto, disability=disability, home=home, life=life
+    )

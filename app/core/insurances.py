@@ -5,7 +5,6 @@ from .rules.add_rules import *
 
 
 class Insurance:
-
     def __init__(self, user: User, base_score: int, rules_list: List[Rule]):
         self.user = user
         self.base_score = base_score
@@ -55,7 +54,7 @@ class Disability(Insurance):
             DeductWhenIncomeOver200k(user, base_score),
             AddWhenHouseIsMortgaged(user, base_score),
             AddWhenHasDependents(user, base_score),
-            DeductWhenIsMarried(user, base_score)
+            DeductWhenIsMarried(user, base_score),
         ]
         super().__init__(user, base_score, rules_list)
 
@@ -67,7 +66,7 @@ class Auto(Insurance):
             DeductWhenYoungerThan30(user, base_score),
             DeductWhenBetween30and40(user, base_score),
             DeductWhenIncomeOver200k(user, base_score),
-            AddWhenVehicleIsNew(user, base_score)
+            AddWhenVehicleIsNew(user, base_score),
         ]
         super().__init__(user, base_score, rules_list)
 
@@ -79,7 +78,7 @@ class Home(Insurance):
             DeductWhenYoungerThan30(user, base_score),
             DeductWhenBetween30and40(user, base_score),
             DeductWhenIncomeOver200k(user, base_score),
-            AddWhenHouseIsMortgaged(user, base_score)
+            AddWhenHouseIsMortgaged(user, base_score),
         ]
         super().__init__(user, base_score, rules_list)
 
@@ -92,6 +91,6 @@ class Life(Insurance):
             DeductWhenBetween30and40(user, base_score),
             DeductWhenIncomeOver200k(user, base_score),
             AddWhenHasDependents(user, base_score),
-            AddWhenIsMarried(user, base_score)
+            AddWhenIsMarried(user, base_score),
         ]
         super().__init__(user, base_score, rules_list)

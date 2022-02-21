@@ -23,12 +23,12 @@ class House(BaseModel):
 class Vehicle(BaseModel):
     year: int
 
-    @validator('year')
+    @validator("year")
     def year_validator(cls, v):
         first_car_year = 1886
         current_year = int(time.strftime("%Y"))
         if not (first_car_year <= v <= current_year):
-            raise ValueError(f'invalid year {v}')
+            raise ValueError(f"invalid year {v}")
 
         return v
 
@@ -45,14 +45,14 @@ class User(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    @validator('age', 'dependents', 'income')
+    @validator("age", "dependents", "income")
     def gte_zero_validator(cls, v):
         if v < 0:
-            raise ValueError(f'{v} should be greater than or equal to zero')
+            raise ValueError(f"{v} should be greater than or equal to zero")
         return v
 
-    @validator('risk_questions')
+    @validator("risk_questions")
     def risk_questions_validator(cls, v):
         if len(v) != 3:
-            raise ValueError(f'{v} should have 3 elements')
+            raise ValueError(f"{v} should have 3 elements")
         return v

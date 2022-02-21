@@ -35,4 +35,3 @@ class Rule:
 class UserIsMarried(Rule):
     def should_apply(self) -> bool:
         return self.user.marital_status == MaritalStatus.MARRIED
-

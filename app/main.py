@@ -20,7 +20,7 @@ app = FastAPI(
         "email": "liviadelgado.dev@gmail.com",
     },
     docs_url="/",
-    redoc_url="/docs"
+    redoc_url="/docs",
 )
 
 app.include_router(risk_profiles.router)
@@ -32,5 +32,3 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         status_code=status.HTTP_400_BAD_REQUEST,
         content=jsonable_encoder({"detail": exc.errors()}),
     )
-
-
