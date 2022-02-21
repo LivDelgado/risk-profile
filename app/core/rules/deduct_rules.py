@@ -4,7 +4,7 @@ from .rules import *
 class DeductFromRiskScore(Rule):
     amount_to_deduct = -1
 
-    def apply(self) -> Tuple[int, InsuranceProfile | None]:
+    def apply(self) -> Tuple[int, InsurancePlan | None]:
         self.add_to_score(self.amount_to_deduct)
         return self.base_score, None
 

@@ -6,7 +6,7 @@ from app.models.user import HouseOwnershipStatus
 class AddToRiskScore(Rule):
     amount_to_add = 1
 
-    def apply(self) -> Tuple[int, InsuranceProfile | None]:
+    def apply(self) -> Tuple[int, InsurancePlan | None]:
         self.add_to_score(self.amount_to_add)
         return self.base_score, None
 

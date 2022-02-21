@@ -12,18 +12,31 @@ class Insurance:
         self.rules_list = rules_list
 
     @staticmethod
-    def determine_final_profile(base_score: int):
-        if base_score <= 0:
-            return InsuranceProfile.ECONOMIC
-        elif base_score < 3:
-            return InsuranceProfile.REGULAR
-        else:
-            return InsuranceProfile.RESPONSIBLE
+    def determine_final_profile(score: int) -> InsurancePlan:
+        """
+        Determines insurance plan based on final risk score
 
-    def determine_risk_score(self) -> InsuranceProfile:
+        :param score: score to be analysed
+        :return: insurance plan based on risk score
+        """
+        if score <= 0:
+            return InsurancePlan.ECONOMIC
+        elif score < 3:
+            return InsurancePlan.REGULAR
+        else:
+            return InsurancePlan.RESPONSIBLE
+
+    def get_insurance_plan_recommendation(self) -> InsurancePlan:
+        """
+        Suggest plan based on the risk profile rules for the insurance line
+
+        :return: insurance plan based on risk profile
+        """
         for rule in self.rules_list:
             if rule.should_apply():
                 current_score, final_profile = rule.apply()
+
+                # updates the score
                 self.base_score = current_score
 
                 if final_profile:  # this means that it is already a final result

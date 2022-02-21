@@ -6,7 +6,7 @@ import time
 RiskAnswers = List[bool]
 
 
-class MarritalStatus(Enum):
+class MaritalStatus(Enum):
     SINGLE = "single"
     MARRIED = "married"
 
@@ -37,7 +37,7 @@ class User(BaseModel):
     age: int
     dependents: int
     income: int
-    marital_status: MarritalStatus
+    marital_status: MaritalStatus
     risk_questions: RiskAnswers
     house: House | None = None
     vehicle: Vehicle | None = None
