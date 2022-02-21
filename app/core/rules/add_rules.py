@@ -13,7 +13,7 @@ class AddToRiskScore(Rule):
 
 class AddWhenHouseIsMortgaged(AddToRiskScore):
     def should_apply(self) -> bool:
-        return self.user.house and self.user.house.ownership_status == HouseOwnershipStatus.MORTGAGED
+        return self.user.house is not None and self.user.house.ownership_status == HouseOwnershipStatus.MORTGAGED
 
 
 class AddWhenHasDependents(AddToRiskScore):
@@ -30,4 +30,4 @@ class AddWhenVehicleIsNew(AddToRiskScore):
         max_age = 5
         current_year = int(time.strftime("%Y"))
         min_year = current_year - max_age
-        return self.user.vehicle and self.user.vehicle.year and self.user.vehicle.year > min_year
+        return self.user.vehicle is not None and self.user.vehicle.year >= min_year
