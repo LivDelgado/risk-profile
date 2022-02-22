@@ -33,7 +33,7 @@ class Insurance:
         """
         for rule in self.rules_list:
             if rule.should_apply():
-                current_score, final_profile = rule.apply()
+                current_score, final_profile = rule.apply(self.base_score)
 
                 # updates the score
                 self.base_score = current_score
@@ -47,14 +47,14 @@ class Insurance:
 class Disability(Insurance):
     def __init__(self, user: User, base_score: int):
         rules_list = [
-            IneligibleWhenNoIncome(user, base_score),
-            IneligibleWhenOlderThan60(user, base_score),
-            DeductWhenYoungerThan30(user, base_score),
-            DeductWhenBetween30and40(user, base_score),
-            DeductWhenIncomeOver200k(user, base_score),
-            AddWhenHouseIsMortgaged(user, base_score),
-            AddWhenHasDependents(user, base_score),
-            DeductWhenIsMarried(user, base_score),
+            IneligibleWhenNoIncome(user),
+            IneligibleWhenOlderThan60(user),
+            DeductWhenYoungerThan30(user),
+            DeductWhenBetween30and40(user),
+            DeductWhenIncomeOver200k(user),
+            AddWhenHouseIsMortgaged(user),
+            AddWhenHasDependents(user),
+            DeductWhenIsMarried(user),
         ]
         super().__init__(user, base_score, rules_list)
 
@@ -62,11 +62,11 @@ class Disability(Insurance):
 class Auto(Insurance):
     def __init__(self, user: User, base_score: int):
         rules_list = [
-            IneligibleWhenNoVehicle(user, base_score),
-            DeductWhenYoungerThan30(user, base_score),
-            DeductWhenBetween30and40(user, base_score),
-            DeductWhenIncomeOver200k(user, base_score),
-            AddWhenVehicleIsNew(user, base_score),
+            IneligibleWhenNoVehicle(user),
+            DeductWhenYoungerThan30(user),
+            DeductWhenBetween30and40(user),
+            DeductWhenIncomeOver200k(user),
+            AddWhenVehicleIsNew(user),
         ]
         super().__init__(user, base_score, rules_list)
 
@@ -74,11 +74,11 @@ class Auto(Insurance):
 class Home(Insurance):
     def __init__(self, user: User, base_score: int):
         rules_list = [
-            IneligibleWhenNoHouse(user, base_score),
-            DeductWhenYoungerThan30(user, base_score),
-            DeductWhenBetween30and40(user, base_score),
-            DeductWhenIncomeOver200k(user, base_score),
-            AddWhenHouseIsMortgaged(user, base_score),
+            IneligibleWhenNoHouse(user),
+            DeductWhenYoungerThan30(user),
+            DeductWhenBetween30and40(user),
+            DeductWhenIncomeOver200k(user),
+            AddWhenHouseIsMortgaged(user),
         ]
         super().__init__(user, base_score, rules_list)
 
@@ -86,11 +86,11 @@ class Home(Insurance):
 class Life(Insurance):
     def __init__(self, user: User, base_score: int):
         rules_list = [
-            IneligibleWhenOlderThan60(user, base_score),
-            DeductWhenYoungerThan30(user, base_score),
-            DeductWhenBetween30and40(user, base_score),
-            DeductWhenIncomeOver200k(user, base_score),
-            AddWhenHasDependents(user, base_score),
-            AddWhenIsMarried(user, base_score),
+            IneligibleWhenOlderThan60(user),
+            DeductWhenYoungerThan30(user),
+            DeductWhenBetween30and40(user),
+            DeductWhenIncomeOver200k(user),
+            AddWhenHasDependents(user),
+            AddWhenIsMarried(user),
         ]
         super().__init__(user, base_score, rules_list)

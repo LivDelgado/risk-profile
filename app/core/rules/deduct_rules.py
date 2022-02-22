@@ -2,15 +2,14 @@ from .rules import *
 
 
 class DeductFromRiskScore(Rule):
-    amount_to_deduct = -1
+    amount_to_deduct = 1
 
-    def apply(self) -> Tuple[int, InsurancePlan | None]:
-        self.add_to_score(self.amount_to_deduct)
-        return self.base_score, None
+    def apply(self, current_score) -> Tuple[int, InsurancePlan | None]:
+        return current_score - self.amount_to_deduct, None
 
 
 class DeductWhenYoungerThan30(DeductFromRiskScore):
-    amount_to_deduct = -2
+    amount_to_deduct = 2
 
     def should_apply(self) -> bool:
         return self.user.age < 30

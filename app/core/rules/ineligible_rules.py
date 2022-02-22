@@ -2,8 +2,8 @@ from .rules import *
 
 
 class Ineligible(Rule):
-    def apply(self) -> Tuple[int, InsurancePlan | None]:
-        return self.base_score, InsurancePlan.INELIGIBLE
+    def apply(self, current_score) -> Tuple[int, InsurancePlan | None]:
+        return current_score, InsurancePlan.INELIGIBLE
 
 
 class IneligibleWhenNoIncome(Ineligible):
