@@ -7,14 +7,14 @@ client = TestClient(app)
 
 
 valid_request = {
-            "age": 35,
-            "dependents": 2,
-            "house": {"ownership_status": "owned"},
-            "income": 0,
-            "marital_status": "married",
-            "risk_questions": [0, 1, 0],
-            "vehicle": {"year": 2018},
-        }
+    "age": 35,
+    "dependents": 2,
+    "house": {"ownership_status": "owned"},
+    "income": 0,
+    "marital_status": "married",
+    "risk_questions": [0, 1, 0],
+    "vehicle": {"year": 2018},
+}
 
 
 def test_valid_request():
@@ -33,8 +33,8 @@ def test_valid_request():
 
 def test_valid_request_no_house_nor_vehicle():
     request = valid_request
-    request.pop('house')
-    request.pop('vehicle')
+    request.pop("house")
+    request.pop("vehicle")
     response = client.post(
         "/risk-profiles/",
         json=request,
@@ -168,8 +168,7 @@ def test_invalid_car_year():
             "income": 1,
             "marital_status": "single",
             "risk_questions": [0, 1, 0],
-            "vehicle": {"year": int(time.strftime("%Y"))+1},
+            "vehicle": {"year": int(time.strftime("%Y")) + 1},
         },
     )
     assert response.status_code == 400
-
