@@ -27,7 +27,7 @@ def test_risk_algorithm_user_married_younger_than_30_large_income():
         marital_status=MaritalStatus.MARRIED,
         risk_questions=[True, True, True],
         house=House(ownership_status=HouseOwnershipStatus.OWNED),
-        vehicle=Vehicle(year=int(time.strftime("%Y")))
+        vehicle=Vehicle(year=int(time.strftime("%Y"))),
     )
 
     # < 30y -> remove 2 from all
