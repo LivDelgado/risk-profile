@@ -29,6 +29,13 @@ They can be found in the requirements file.
 pip install -r requirements.txt
 ```
 
+The final step is to run the local server. In the console it will show
+the correct port, but it should be found at [http://localhost:8000](http://127.0.0.1:8000).
+
+```bash
+uvicorn app.main:app --reload
+```
+
 ### Running the tests
 
 ```bash
