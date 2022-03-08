@@ -1,14 +1,22 @@
 from typing import List
+
 from .rules.ineligible_rules import *
 from .rules.deduct_rules import *
 from .rules.add_rules import *
 
 
 class Insurance:
-    def __init__(self, user: User, base_score: int, rules_list: List[Rule]):
+    def __init__(self, user: User, base_score: int, rules: List[Rule]):
+        base_rules = [
+            DeductWhenYoungerThan30(user),
+            DeductWhenBetween30and40(user),
+            DeductWhenIncomeOver200k(user),
+            IneligibleWhenLowIncomeAndHighRisk(user),
+        ]
         self.user = user
         self.base_score = base_score
-        self.rules_list = rules_list
+        self.rules_list = base_rules
+        self.rules_list.extend(rules)
 
     @staticmethod
     def determine_final_profile(score: int) -> InsurancePlan:
@@ -49,9 +57,6 @@ class Disability(Insurance):
         rules_list = [
             IneligibleWhenNoIncome(user),
             IneligibleWhenOlderThan60(user),
-            DeductWhenYoungerThan30(user),
-            DeductWhenBetween30and40(user),
-            DeductWhenIncomeOver200k(user),
             AddWhenHouseIsMortgaged(user),
             AddWhenHasDependents(user),
             DeductWhenIsMarried(user),
@@ -63,9 +68,6 @@ class Auto(Insurance):
     def __init__(self, user: User, base_score: int):
         rules_list = [
             IneligibleWhenNoVehicle(user),
-            DeductWhenYoungerThan30(user),
-            DeductWhenBetween30and40(user),
-            DeductWhenIncomeOver200k(user),
             AddWhenVehicleIsNew(user),
         ]
         super().__init__(user, base_score, rules_list)
@@ -75,9 +77,6 @@ class Home(Insurance):
     def __init__(self, user: User, base_score: int):
         rules_list = [
             IneligibleWhenNoHouse(user),
-            DeductWhenYoungerThan30(user),
-            DeductWhenBetween30and40(user),
-            DeductWhenIncomeOver200k(user),
             AddWhenHouseIsMortgaged(user),
         ]
         super().__init__(user, base_score, rules_list)
@@ -87,9 +86,6 @@ class Life(Insurance):
     def __init__(self, user: User, base_score: int):
         rules_list = [
             IneligibleWhenOlderThan60(user),
-            DeductWhenYoungerThan30(user),
-            DeductWhenBetween30and40(user),
-            DeductWhenIncomeOver200k(user),
             AddWhenHasDependents(user),
             AddWhenIsMarried(user),
         ]

@@ -76,7 +76,7 @@ def test_age_between_30_and_40_should_not_apply_older():
 
 
 def test_income_over_200k_should_apply():
-    user.income = 201
+    user.income = 201000
     rule = DeductWhenIncomeOver200k(user)
     should_apply = rule.should_apply()
     assert should_apply is True

@@ -23,7 +23,7 @@ class DeductWhenBetween30and40(DeductFromRiskScore):
 class DeductWhenIncomeOver200k(DeductFromRiskScore):
     def should_apply(self) -> bool:
         # assuming the income is already in thousands of dollars
-        return self.user.income > 200
+        return self.user.income > 200000
 
 
 class DeductWhenIsMarried(DeductFromRiskScore, UserIsMarried):

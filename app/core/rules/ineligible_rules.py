@@ -6,6 +6,11 @@ class Ineligible(Rule):
         return current_score, InsurancePlan.INELIGIBLE
 
 
+class IneligibleWhenLowIncomeAndHighRisk(Ineligible):
+    def should_apply(self) -> bool:
+        return self.user.income < 25000 and sum(self.user.risk_questions) == 0
+
+
 class IneligibleWhenNoIncome(Ineligible):
     def should_apply(self) -> bool:
         return self.user.income == 0

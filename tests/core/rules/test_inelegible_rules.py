@@ -80,3 +80,27 @@ def test_ineligible_when_older_than_60_should_not_apply_younger():
     rule = IneligibleWhenOlderThan60(user)
     should_apply = rule.should_apply()
     assert should_apply is False
+
+
+def test_ineligible_when_low_income_and_high_risk_should_apply():
+    user.income = 2000
+    user.risk_questions = [False, False, False]
+    rule = IneligibleWhenLowIncomeAndHighRisk(user)
+    should_apply = rule.should_apply()
+    assert should_apply is True
+
+
+def test_ineligible_when_low_income_and_high_risk_should_not_apply_risk_question():
+    user.income = 2000
+    user.risk_questions = [False, False, True]
+    rule = IneligibleWhenLowIncomeAndHighRisk(user)
+    should_apply = rule.should_apply()
+    assert should_apply is False
+
+
+def test_ineligible_when_low_income_and_high_risk_should_not_apply_income_is_higher():
+    user.income = 25000
+    user.risk_questions = [False, False, False]
+    rule = IneligibleWhenLowIncomeAndHighRisk(user)
+    should_apply = rule.should_apply()
+    assert should_apply is False

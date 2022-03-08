@@ -23,7 +23,7 @@ def test_risk_algorithm_user_married_younger_than_30_large_income():
     user = User(
         age=29,
         dependents=2,
-        income=201,
+        income=300000,
         marital_status=MaritalStatus.MARRIED,
         risk_questions=[True, True, True],
         house=House(ownership_status=HouseOwnershipStatus.OWNED),

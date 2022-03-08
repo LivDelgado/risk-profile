@@ -31,6 +31,30 @@ def test_valid_request():
     }
 
 
+def test_ineligibility_low_income_high_risk():
+    request = {
+        "age": 35,
+        "dependents": 2,
+        "house": {"ownership_status": "owned"},
+        "income": 20000,
+        "marital_status": "married",
+        "risk_questions": [0, 0, 0],
+        "vehicle": {"year": 2018},
+    }
+
+    response = client.post(
+        "/risk-profiles/",
+        json=request,
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "auto": "ineligible",
+        "disability": "ineligible",
+        "home": "ineligible",
+        "life": "ineligible",
+    }
+
+
 def test_valid_request_no_house_nor_vehicle():
     request = valid_request
     request.pop("house")
