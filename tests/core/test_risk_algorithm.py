@@ -69,3 +69,4 @@ def test_risk_algorithm_house_rented():
     assert result.home is None
     assert result.renters == InsurancePlan.ECONOMIC
     assert result.life == InsurancePlan.REGULAR
+    assert result.umbrella == InsurancePlan.ECONOMIC
