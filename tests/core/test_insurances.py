@@ -56,20 +56,25 @@ def test_disability_insurance_line_ineligible_older_than_60():
     assert result == InsurancePlan.INELIGIBLE
 
 
-def test_disability_insurance_line():
+def test_disability_insurance_line_eligible_with_all_rules():
     user = User(
         age=20,
         dependents=2,
-        income=201,
+        income=201000,
         marital_status=MaritalStatus.MARRIED,
         risk_questions=[True, True, True],
-        house=House(ownership_status=HouseOwnershipStatus.MORTGAGED),
+        house=House(ownership_status=HouseOwnershipStatus.OWNED),
     )
     base_score = 3
 
-    # should become 1
+    # less than 30y -> -2
+    # income > 200k -> -1
+    # has dependents -> +1
+    # is married -> -1
+
+    # should become 0
     result = Disability(user, base_score).get_insurance_plan_recommendation()
-    assert result == InsurancePlan.REGULAR
+    assert result == InsurancePlan.ECONOMIC
 
 
 def test_auto_insurance_line_ineligible_no_vehicle():
@@ -116,21 +121,21 @@ def test_home_insurance_line_ineligible_no_house():
     assert result == InsurancePlan.INELIGIBLE
 
 
-def test_home_insurance_line():
+def test_home_insurance_line_eligible():
     user = User(
         age=20,
         dependents=2,
-        income=201,
+        income=201000,
         marital_status=MaritalStatus.MARRIED,
         risk_questions=[True, True, True],
         vehicle=Vehicle(year=int(time.strftime("%Y"))),
-        house=House(ownership_status=HouseOwnershipStatus.MORTGAGED),
+        house=House(ownership_status=HouseOwnershipStatus.OWNED),
     )
     base_score = 3
 
-    # should become 1
+    # should become 0
     result = Home(user, base_score).get_insurance_plan_recommendation()
-    assert result == InsurancePlan.REGULAR
+    assert result == InsurancePlan.ECONOMIC
 
 
 def test_life_insurance_line_ineligible_older_than_60():
@@ -155,7 +160,7 @@ def test_life_insurance_line():
         marital_status=MaritalStatus.MARRIED,
         risk_questions=[True, True, True],
         vehicle=Vehicle(year=int(time.strftime("%Y"))),
-        house=House(ownership_status=HouseOwnershipStatus.MORTGAGED),
+        house=House(ownership_status=HouseOwnershipStatus.OWNED),
     )
     base_score = 2
 
@@ -173,7 +178,7 @@ def test_umbrella_insurance_line_economic_main_line():
         marital_status=MaritalStatus.MARRIED,
         risk_questions=[True, True, True],
         vehicle=Vehicle(year=int(time.strftime("%Y"))),
-        house=House(ownership_status=HouseOwnershipStatus.MORTGAGED),
+        house=House(ownership_status=HouseOwnershipStatus.OWNED),
     )
     base_score = 3
 
@@ -192,7 +197,7 @@ def test_umbrella_insurance_line_no_economic_main_line():
         marital_status=MaritalStatus.MARRIED,
         risk_questions=[True, True, True],
         vehicle=Vehicle(year=int(time.strftime("%Y"))),
-        house=House(ownership_status=HouseOwnershipStatus.MORTGAGED),
+        house=House(ownership_status=HouseOwnershipStatus.OWNED),
     )
     base_score = 3
 

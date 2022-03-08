@@ -8,14 +8,6 @@ class __AddToRiskScoreUserRule(AddToRiskScore, UserRule):
     pass
 
 
-class AddWhenHouseIsMortgaged(__AddToRiskScoreUserRule):
-    def should_apply(self) -> bool:
-        return (
-            self.user.house is not None
-            and self.user.house.ownership_status == HouseOwnershipStatus.MORTGAGED
-        )
-
-
 class AddWhenHasDependents(__AddToRiskScoreUserRule):
     def should_apply(self) -> bool:
         return self.user.dependents > 0

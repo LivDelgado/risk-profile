@@ -88,7 +88,6 @@ class Disability(Insurance):
         rules_list = [
             IneligibleWhenNoIncome(user),
             IneligibleWhenOlderThan60(user),
-            AddWhenHouseIsMortgaged(user),
             AddWhenHasDependents(user),
             DeductWhenIsMarried(user),
         ]
@@ -108,7 +107,6 @@ class House(Insurance):
     def __init__(self, user: User, base_score: int):
         rules_list = [
             IneligibleWhenNoHouse(user),
-            AddWhenHouseIsMortgaged(user),
         ]
         super().__init__(user, base_score, rules_list)
 

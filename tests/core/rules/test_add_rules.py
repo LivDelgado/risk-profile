@@ -25,27 +25,6 @@ def test_apply_add_to_risk_score():
     assert new_score == 4
 
 
-def test_house_mortgaged_rule_should_not_apply_no_house():
-    user.house = None
-    rule = AddWhenHouseIsMortgaged(user)
-    should_apply = rule.should_apply()
-    assert should_apply is False
-
-
-def test_house_mortgaged_rule_should_apply():
-    user.house = House(ownership_status=HouseOwnershipStatus.MORTGAGED)
-    rule = AddWhenHouseIsMortgaged(user)
-    should_apply = rule.should_apply()
-    assert should_apply is True
-
-
-def test_house_mortgaged_rule_should_not_apply_house_owned():
-    user.house = House(ownership_status=HouseOwnershipStatus.OWNED)
-    rule = AddWhenHouseIsMortgaged(user)
-    should_apply = rule.should_apply()
-    assert should_apply is False
-
-
 def test_dependents_rule_should_not_apply_no_dependents():
     user.dependents = 0
     rule = AddWhenHasDependents(user)
