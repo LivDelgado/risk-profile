@@ -18,6 +18,7 @@ def test_risk_algorithm_all_ineligible():
     assert result.disability == InsurancePlan.INELIGIBLE
     assert result.life == InsurancePlan.INELIGIBLE
     assert result.renters == InsurancePlan.INELIGIBLE
+    assert result.umbrella == InsurancePlan.INELIGIBLE
 
 
 def test_risk_algorithm_user_married_younger_than_30_large_income():
@@ -49,6 +50,7 @@ def test_risk_algorithm_user_married_younger_than_30_large_income():
     assert result.home == InsurancePlan.ECONOMIC
     assert result.life == InsurancePlan.REGULAR
     assert result.renters is None
+    assert result.umbrella == InsurancePlan.ECONOMIC
 
 
 def test_risk_algorithm_house_rented():

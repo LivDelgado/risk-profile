@@ -162,3 +162,41 @@ def test_life_insurance_line():
     # should become 1
     result = Life(user, base_score).get_insurance_plan_recommendation()
     assert result == InsurancePlan.REGULAR
+
+
+def test_umbrella_insurance_line_economic_main_line():
+    main_line_plans = [InsurancePlan.INELIGIBLE, InsurancePlan.ECONOMIC]
+    user = User(
+        age=20,
+        dependents=2,
+        income=50000,
+        marital_status=MaritalStatus.MARRIED,
+        risk_questions=[True, True, True],
+        vehicle=Vehicle(year=int(time.strftime("%Y"))),
+        house=House(ownership_status=HouseOwnershipStatus.MORTGAGED),
+    )
+    base_score = 3
+
+    result = Umbrella(
+        user, base_score, main_line_plans
+    ).get_insurance_plan_recommendation()
+    assert result == InsurancePlan.REGULAR
+
+
+def test_umbrella_insurance_line_no_economic_main_line():
+    main_line_plans = [InsurancePlan.INELIGIBLE, InsurancePlan.REGULAR]
+    user = User(
+        age=20,
+        dependents=2,
+        income=50000,
+        marital_status=MaritalStatus.MARRIED,
+        risk_questions=[True, True, True],
+        vehicle=Vehicle(year=int(time.strftime("%Y"))),
+        house=House(ownership_status=HouseOwnershipStatus.MORTGAGED),
+    )
+    base_score = 3
+
+    result = Umbrella(
+        user, base_score, main_line_plans
+    ).get_insurance_plan_recommendation()
+    assert result == InsurancePlan.INELIGIBLE

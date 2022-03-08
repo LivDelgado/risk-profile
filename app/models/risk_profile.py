@@ -15,3 +15,4 @@ class InsurancePlanRecommendation(BaseModel):
     home: InsurancePlan | None
     renters: InsurancePlan | None
     life: InsurancePlan
+    umbrella: InsurancePlan

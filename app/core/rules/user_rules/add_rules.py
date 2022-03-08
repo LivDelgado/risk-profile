@@ -1,16 +1,14 @@
 import time
-from .rules import *
+from app.core.rules.rules import *
+from app.core.rules.user_rules.user_rules import UserIsMarried, UserRule
 from app.models.user import HouseOwnershipStatus
 
 
-class AddToRiskScore(Rule):
-    amount_to_add = 1
-
-    def apply(self, current_score) -> Tuple[int, InsurancePlan | None]:
-        return current_score + self.amount_to_add, None
+class __AddToRiskScoreUserRule(AddToRiskScore, UserRule):
+    pass
 
 
-class AddWhenHouseIsMortgaged(AddToRiskScore):
+class AddWhenHouseIsMortgaged(__AddToRiskScoreUserRule):
     def should_apply(self) -> bool:
         return (
             self.user.house is not None
@@ -18,7 +16,7 @@ class AddWhenHouseIsMortgaged(AddToRiskScore):
         )
 
 
-class AddWhenHasDependents(AddToRiskScore):
+class AddWhenHasDependents(__AddToRiskScoreUserRule):
     def should_apply(self) -> bool:
         return self.user.dependents > 0
 
@@ -27,7 +25,7 @@ class AddWhenIsMarried(AddToRiskScore, UserIsMarried):
     pass
 
 
-class AddWhenVehicleIsNew(AddToRiskScore):
+class AddWhenVehicleIsNew(__AddToRiskScoreUserRule):
     def should_apply(self) -> bool:
         max_age = 5
         current_year = int(time.strftime("%Y"))

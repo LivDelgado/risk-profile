@@ -1,12 +1,8 @@
 from typing import Tuple
-from app.models.user import User, MaritalStatus
 from app.models.risk_profile import InsurancePlan
 
 
 class Rule:
-    def __init__(self, user: User):
-        self.user = user
-
     def should_apply(self) -> bool:
         """
         Determines if rule should be applied to user
@@ -23,6 +19,20 @@ class Rule:
         return current_score, None
 
 
-class UserIsMarried(Rule):
-    def should_apply(self) -> bool:
-        return self.user.marital_status == MaritalStatus.MARRIED
+class Ineligible(Rule):
+    def apply(self, current_score) -> Tuple[int, InsurancePlan | None]:
+        return current_score, InsurancePlan.INELIGIBLE
+
+
+class AddToRiskScore(Rule):
+    amount_to_add = 1
+
+    def apply(self, current_score) -> Tuple[int, InsurancePlan | None]:
+        return current_score + self.amount_to_add, None
+
+
+class DeductFromRiskScore(Rule):
+    amount_to_deduct = 1
+
+    def apply(self, current_score) -> Tuple[int, InsurancePlan | None]:
+        return current_score - self.amount_to_deduct, None

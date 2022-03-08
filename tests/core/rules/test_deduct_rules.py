@@ -1,4 +1,4 @@
-from app.core.rules.deduct_rules import *
+from app.core.rules.user_rules.deduct_rules import *
 from app.models.user import *
 
 user = User(
@@ -13,7 +13,7 @@ base_score = 0
 
 
 def test_apply_deduct_from_risk_score():
-    rule = DeductFromRiskScore(user)
+    rule = DeductFromRiskScore()
     new_score, plan = rule.apply(base_score)
     assert plan is None
     assert new_score == -1

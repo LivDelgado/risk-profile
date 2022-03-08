@@ -1,8 +1,12 @@
 from typing import List, Optional
 
-from .rules.ineligible_rules import *
-from .rules.deduct_rules import *
-from .rules.add_rules import *
+from app.core.rules.main_insurance_plan_rules.ineligible_rules import (
+    IneligibleWhenNoEconomicMainPlan,
+)
+from app.core.rules.user_rules.ineligible_rules import *
+from app.core.rules.user_rules.deduct_rules import *
+from app.core.rules.user_rules.add_rules import *
+from app.models.user import User
 
 
 class Insurance:
@@ -33,7 +37,7 @@ class Insurance:
         else:
             return InsurancePlan.RESPONSIBLE
 
-    def recommend_plan_when_appliable(self) -> Optional[InsurancePlan]:
+    def recommend_plan_when_applicable(self) -> Optional[InsurancePlan]:
         if self.is_recommendable():
             return self.get_insurance_plan_recommendation()
 
@@ -57,6 +61,26 @@ class Insurance:
                     return final_profile
 
         return self.determine_final_profile(self.base_score)
+
+
+class SecondaryInsurance(Insurance):
+    def __init__(
+        self,
+        user: User,
+        base_score: int,
+        main_insurances: List[InsurancePlan],
+        rules: List[Rule],
+    ):
+        self.main_insurances = main_insurances
+        super().__init__(user, base_score, rules)
+
+
+class Umbrella(SecondaryInsurance):
+    def __init__(
+        self, user: User, base_score: int, main_insurances: List[InsurancePlan]
+    ):
+        rules_list = [IneligibleWhenNoEconomicMainPlan(main_insurances)]
+        super().__init__(user, base_score, main_insurances, rules_list)
 
 
 class Disability(Insurance):

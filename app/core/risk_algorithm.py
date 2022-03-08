@@ -1,7 +1,7 @@
 from typing import List
 from app.models.user import User
 from app.models.risk_profile import InsurancePlanRecommendation
-from .insurances import Disability, Auto, Home, Life, Renters
+from .insurances import Disability, Auto, Home, Life, Renters, Umbrella
 
 
 def calculate_base_score(risk_questions: List[bool]) -> int:
@@ -24,12 +24,23 @@ def calculate_risk_profile(user: User) -> InsurancePlanRecommendation:
     """
     base_score = calculate_base_score(user.risk_questions)
 
-    disability = Disability(user, base_score).recommend_plan_when_appliable()
-    auto = Auto(user, base_score).recommend_plan_when_appliable()
-    home = Home(user, base_score).recommend_plan_when_appliable()
-    life = Life(user, base_score).recommend_plan_when_appliable()
-    renters = Renters(user, base_score).recommend_plan_when_appliable()
+    disability = Disability(user, base_score).recommend_plan_when_applicable()
+    auto = Auto(user, base_score).recommend_plan_when_applicable()
+    home = Home(user, base_score).recommend_plan_when_applicable()
+    life = Life(user, base_score).recommend_plan_when_applicable()
+    renters = Renters(user, base_score).recommend_plan_when_applicable()
+
+    main_insurance_plans = [life, disability, home, auto]
+
+    umbrella = Umbrella(
+        user, base_score, main_insurance_plans
+    ).recommend_plan_when_applicable()
 
     return InsurancePlanRecommendation(
-        auto=auto, disability=disability, home=home, life=life, renters=renters
+        auto=auto,
+        disability=disability,
+        home=home,
+        life=life,
+        renters=renters,
+        umbrella=umbrella,
     )

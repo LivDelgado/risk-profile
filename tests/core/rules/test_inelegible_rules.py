@@ -1,4 +1,4 @@
-from app.core.rules.ineligible_rules import *
+from app.core.rules.user_rules.ineligible_rules import *
 from app.models.user import *
 
 user = User(
@@ -13,7 +13,7 @@ base_score = 0
 
 
 def test_apply_ineligible():
-    rule = Ineligible(user)
+    rule = Ineligible()
     new_score, plan = rule.apply(base_score)
     assert plan is InsurancePlan.INELIGIBLE
     assert new_score == base_score

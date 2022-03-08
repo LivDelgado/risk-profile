@@ -1,4 +1,4 @@
-from app.core.rules.add_rules import *
+from app.core.rules.user_rules.add_rules import *
 from app.models.user import *
 import time
 
@@ -14,7 +14,7 @@ base_score = 0
 
 
 def test_apply_add_to_risk_score():
-    rule = AddToRiskScore(user)
+    rule = AddToRiskScore()
     new_score, plan = rule.apply(base_score)
     assert plan is None
     assert new_score == 1

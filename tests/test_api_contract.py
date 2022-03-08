@@ -28,6 +28,7 @@ def test_valid_request_house_owned():
         "disability": "ineligible",
         "home": "economic",
         "life": "regular",
+        "umbrella": "economic",
     }
 
 
@@ -52,6 +53,7 @@ def test_valid_request_house_rented():
         "disability": "ineligible",
         "renters": "economic",
         "life": "regular",
+        "umbrella": "ineligible",
     }
 
 
@@ -76,6 +78,7 @@ def test_ineligibility_low_income_high_risk():
         "disability": "ineligible",
         "home": "ineligible",
         "life": "ineligible",
+        "umbrella": "ineligible",
     }
 
 
@@ -94,6 +97,7 @@ def test_valid_request_no_house_nor_vehicle():
         "home": "ineligible",
         "life": "regular",
         "renters": "ineligible",
+        "umbrella": "ineligible",
     }
 
 
