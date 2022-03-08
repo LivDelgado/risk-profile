@@ -11,6 +11,7 @@ router = APIRouter()
     "/risk-profiles/",
     tags=["risk profiles"],
     response_model=InsurancePlanRecommendation,
+    response_model_exclude_none=True,
 )
 async def calculate_insurance_recommendation(
     user_information: User,

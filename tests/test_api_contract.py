@@ -17,7 +17,7 @@ valid_request = {
 }
 
 
-def test_valid_request():
+def test_valid_request_house_owned():
     response = client.post(
         "/risk-profiles/",
         json=valid_request,
@@ -27,6 +27,30 @@ def test_valid_request():
         "auto": "regular",
         "disability": "ineligible",
         "home": "economic",
+        "life": "regular",
+    }
+
+
+def test_valid_request_house_rented():
+    valid_request = {
+        "age": 35,
+        "dependents": 2,
+        "house": {"ownership_status": "rented"},
+        "income": 0,
+        "marital_status": "married",
+        "risk_questions": [0, 1, 0],
+        "vehicle": {"year": 2018},
+    }
+
+    response = client.post(
+        "/risk-profiles/",
+        json=valid_request,
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "auto": "regular",
+        "disability": "ineligible",
+        "renters": "economic",
         "life": "regular",
     }
 
@@ -69,6 +93,7 @@ def test_valid_request_no_house_nor_vehicle():
         "disability": "ineligible",
         "home": "ineligible",
         "life": "regular",
+        "renters": "ineligible",
     }
 
 
@@ -158,7 +183,7 @@ def test_invalid_house_ownership_status():
         json={
             "age": 18,
             "dependents": 0,
-            "house": {"ownership_status": "rent"},
+            "house": {"ownership_status": "ownd"},
             "income": 1,
             "marital_status": "single",
             "risk_questions": [0, 1, 0],
@@ -174,7 +199,7 @@ def test_invalid_car_year():
         json={
             "age": 18,
             "dependents": 0,
-            "house": {"ownership_status": "rent"},
+            "house": {"ownership_status": "owned"},
             "income": 1,
             "marital_status": "single",
             "risk_questions": [0, 1, 0],
@@ -188,7 +213,7 @@ def test_invalid_car_year():
         json={
             "age": 18,
             "dependents": 0,
-            "house": {"ownership_status": "rent"},
+            "house": {"ownership_status": "owned"},
             "income": 1,
             "marital_status": "single",
             "risk_questions": [0, 1, 0],

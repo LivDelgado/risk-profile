@@ -12,5 +12,6 @@ class InsurancePlan(Enum):
 class InsurancePlanRecommendation(BaseModel):
     auto: InsurancePlan
     disability: InsurancePlan
-    home: InsurancePlan
+    home: InsurancePlan | None
+    renters: InsurancePlan | None
     life: InsurancePlan

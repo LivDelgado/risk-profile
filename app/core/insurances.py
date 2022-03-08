@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from .rules.ineligible_rules import *
 from .rules.deduct_rules import *
@@ -32,6 +32,13 @@ class Insurance:
             return InsurancePlan.REGULAR
         else:
             return InsurancePlan.RESPONSIBLE
+
+    def recommend_plan_when_appliable(self) -> Optional[InsurancePlan]:
+        if self.is_recommendable():
+            return self.get_insurance_plan_recommendation()
+
+    def is_recommendable(self) -> bool:
+        return True
 
     def get_insurance_plan_recommendation(self) -> InsurancePlan:
         """
@@ -73,13 +80,29 @@ class Auto(Insurance):
         super().__init__(user, base_score, rules_list)
 
 
-class Home(Insurance):
+class House(Insurance):
     def __init__(self, user: User, base_score: int):
         rules_list = [
             IneligibleWhenNoHouse(user),
             AddWhenHouseIsMortgaged(user),
         ]
         super().__init__(user, base_score, rules_list)
+
+
+class Home(House):
+    def is_recommendable(self) -> bool:
+        return (
+            self.user.house is None
+            or self.user.house.ownership_status == HouseOwnershipStatus.OWNED
+        )
+
+
+class Renters(House):
+    def is_recommendable(self) -> bool:
+        return (
+            self.user.house is None
+            or self.user.house.ownership_status == HouseOwnershipStatus.RENTED
+        )
 
 
 class Life(Insurance):

@@ -14,6 +14,7 @@ class MaritalStatus(Enum):
 class HouseOwnershipStatus(Enum):
     OWNED = "owned"
     MORTGAGED = "mortgaged"
+    RENTED = "rented"
 
 
 class House(BaseModel):

@@ -17,6 +17,7 @@ def test_risk_algorithm_all_ineligible():
     assert result.home == InsurancePlan.INELIGIBLE
     assert result.disability == InsurancePlan.INELIGIBLE
     assert result.life == InsurancePlan.INELIGIBLE
+    assert result.renters == InsurancePlan.INELIGIBLE
 
 
 def test_risk_algorithm_user_married_younger_than_30_large_income():
@@ -46,4 +47,23 @@ def test_risk_algorithm_user_married_younger_than_30_large_income():
     assert result.disability == InsurancePlan.ECONOMIC
     assert result.auto == InsurancePlan.REGULAR
     assert result.home == InsurancePlan.ECONOMIC
+    assert result.life == InsurancePlan.REGULAR
+    assert result.renters is None
+
+
+def test_risk_algorithm_house_rented():
+    user = User(
+        age=29,
+        dependents=2,
+        income=300000,
+        marital_status=MaritalStatus.MARRIED,
+        risk_questions=[True, True, True],
+        house=House(ownership_status=HouseOwnershipStatus.RENTED),
+        vehicle=Vehicle(year=int(time.strftime("%Y"))),
+    )
+    result = calculate_risk_profile(user=user)
+    assert result.disability == InsurancePlan.ECONOMIC
+    assert result.auto == InsurancePlan.REGULAR
+    assert result.home is None
+    assert result.renters == InsurancePlan.ECONOMIC
     assert result.life == InsurancePlan.REGULAR
